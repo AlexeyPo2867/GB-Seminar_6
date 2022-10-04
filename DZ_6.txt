@@ -1,0 +1,172 @@
+// Задача 41
+
+string[] StringToArrayStr(string str)
+{
+    string[] ret = str.Split(' ');
+
+    return ret;
+}
+
+int[] StrArrayToIntArray(string[] str)
+{
+    int[] ret = new int[str.Length];
+
+    for (int i = 0; i < ret.Length; i++) ret[i] = int.Parse(str[i]);
+
+    return ret;
+}
+
+int[] StringToIntArray(string str)
+{
+    string[] a_str = StringToArrayStr(str);
+
+    return StrArrayToIntArray(a_str);
+}
+
+uint Count(int[] arr)
+{
+    uint count = 0;
+
+    for (int i = 0; i < arr.Length; i++) if (arr[i] > 0) count++;
+
+    return count;
+}
+
+Console.WriteLine("Задача 41");
+Console.Write("Введите через пробел несколько целых чисел -> ");
+
+string str       = Console.ReadLine();
+
+//string[] arr_str = StringToArrayStr(str);
+//int[] arr        = StrArrayToIntArray(arr_str);
+uint count       = Count(StringToIntArray(str));
+
+Console.Write($"Количество положительных чисел -> {count}");
+
+// ==============================================================
+
+// Задача 43
+string[] StringToArrayStr(string str)
+{
+    string[] ret = str.Replace('.', ',').Split(' ');
+
+    return ret;
+}
+
+double[] StrArrayToIntArray(string[] str)
+{
+    double[] ret = new double[str.Length];
+
+    for (int i = 0; i < ret.Length; i++) ret[i] = double.Parse(str[i]);
+
+    return ret;
+}
+
+double[] StringToIntArray(string str)
+{
+    string[] a_str = StringToArrayStr(str);
+
+    return StrArrayToIntArray(a_str);
+}
+
+//------------------------------------------
+
+(double x, double y, string msg) CrossPointLine(double[] y1, double[] y2)
+{
+
+    string msg = "";
+
+    if (y1[0] - y2[0] == 0.0)
+    {
+        msg = "Нет точек пересечения";
+        double xx = 0;
+        double yy = 0;
+
+        return (xx, yy, msg);
+
+    }
+    double x = (y2[1] - y1[1]) / (y1[0] - y2[0]);
+    double y = y1[0] * x + y1[1];
+
+    return (x, y, msg);
+}
+
+// --------------------------------------------
+
+
+Console.WriteLine("Задача 43");
+
+Console.Write("Введите через пробел коэффициенты (k1 и b1) 1-й прямой -> ");
+string str = Console.ReadLine();
+double[] y1 = StringToIntArray(str);
+
+Console.Write("Введите через пробел коэффициенты (k2 и b2) 2-й прямой -> ");
+str = Console.ReadLine();
+double[] y2 = StringToIntArray(str);
+
+var point = CrossPointLine(y1, y2);
+
+Console.WriteLine($"Точка пересечения прямых : {point.msg} x = {point.x}   y = {point.y}");
+
+// ========================================================
+
+// Задача 45
+
+Console.WriteLine("Задача 45");
+
+double[,] m2 = {{ 1, 2, 3, 4, 5, 6, 7 },
+            { 2, 3, 4, 5, 6, 7, 8 } };
+
+int[] m = { 1, 2, 3, 4, 5, 6, 7 };
+
+ 
+Copy<double> copy2 = new Copy<double>(m2);
+copy2.PrintArray2();
+
+Console.WriteLine("----------");
+
+Copy<int> copy = new Copy<int>(m);
+copy.PrintArray();
+
+// -----------------------------------------
+class Copy<T>
+{
+    public T[] arr;
+    public T[,] arr2;
+    public Copy(T[] matr)
+    {
+        arr = new T[matr.Length];
+        for (int i = 0; i < matr.Length; i++)
+        {
+            arr[i] = matr[i];
+        }
+    }
+
+    public Copy(T[,] matr)
+    {
+        arr2 = new T[matr.GetLength(0), matr.GetLength(1)];
+
+        for (int i = 0; i < matr.GetLength(0); i++)
+            for (int j = 0; j < matr.GetLength(1); j++)
+            {
+                arr2[i, j] = matr[i, j];
+            }
+    }
+
+    public void PrintArray()
+    {
+        for (int i = 0; i < arr.GetLength(0); i++)
+            Console.Write($"{arr[i]} ");
+    }
+
+    public void PrintArray2()
+    {
+        for (int i = 0; i < arr2.GetLength(0); i++)
+        {
+            for (int j = 0; j < arr2.GetLength(1); j++)
+                Console.Write($"{arr2[i, j]} ");
+            Console.WriteLine();
+        }
+    }
+}
+
